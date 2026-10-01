@@ -346,8 +346,8 @@ Development will be completed incrementally.
 * [x] Define initial stack
 * [x] Create GitHub repository
 * [x] Create README
-* [ ] Define repository structure
-* [ ] Define development conventions
+* [x] Define repository structure
+* [x] Define development conventions
 
 ---
 

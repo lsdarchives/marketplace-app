@@ -353,14 +353,21 @@ Payments are settled off-platform until the Monetization increment so real users
 
 ## Increment 1 — Accounts (`v0.1`)
 
-* [ ] Sign up / log in (email OTP, Google, Apple) with secure session storage
-* [ ] Profile auto-created on signup; edit name, avatar, region
-* [ ] Protected routes and auth state
+* [x] Passwordless sign-in / sign-up with a 6-digit email code
+* [x] Session kept signed-in across restarts, encrypted at rest (SecureStore key + AES)
+* [x] Profile auto-created on signup; edit username, name, area and avatar photo
+* [x] Sell / Inbox / Profile ask for sign-in; browsing stays open
+* [x] Avatar storage bucket with per-user folder policies, pgTAP tests
+* [ ] Google / Apple sign-in (needs a development build + developer accounts) → moved to Increment 2
+
+> Production note: hosted Supabase ignores `supabase/config.toml` email templates. Copy
+> `supabase/templates/magic_link.html` into Dashboard → Authentication → Email Templates → Magic Link.
 
 ## Increment 2 — Listings v1, closed beta (`v0.2`)
 
 * [ ] Categories, create / edit / delete listings with photos
 * [ ] Home feed, category browse, listing detail, mark as sold
+* [ ] Google / Apple sign-in
 * [ ] Styling system decision (NativeWind / Uniwind vs. theme tokens)
 * [ ] Internal EAS build to first 10–20 testers
 
@@ -509,9 +516,9 @@ The platform should remain modular so that new capabilities can be introduced wi
 
 **Status:** In development
 
-**Current Increment:** Increment 0 — Foundation (complete)
+**Current Increment:** Increment 1 — Accounts (complete)
 
-**Next Step:** Increment 1 — Accounts.
+**Next Step:** Increment 2 — Listings v1 (closed beta).
 
 ---
 

@@ -1,6 +1,9 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { AppState, Platform } from 'react-native';
 
 import type { Database } from '@marketplace/shared';
+
+import { SecureSessionStorage } from './secure-session-storage';
 
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
@@ -16,10 +19,19 @@ export const supabase: SupabaseClient<Database> | null =
   url && anonKey
     ? createClient<Database>(url, anonKey, {
         auth: {
-          // Session persistence (expo-secure-store) is added with sign-in in Increment 1.
-          persistSession: false,
-          autoRefreshToken: false,
+          // On web the default (localStorage) is used; native keeps the session encrypted.
+          storage: Platform.OS === 'web' ? undefined : new SecureSessionStorage(),
+          persistSession: true,
+          autoRefreshToken: true,
           detectSessionInUrl: false,
         },
       })
     : null;
+
+// Only refresh tokens while the app is in the foreground (recommended for React Native).
+if (supabase && Platform.OS !== 'web') {
+  AppState.addEventListener('change', (state) => {
+    if (state === 'active') supabase.auth.startAutoRefresh();
+    else supabase.auth.stopAutoRefresh();
+  });
+}

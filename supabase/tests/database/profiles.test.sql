@@ -7,13 +7,12 @@ select ok(
   'RLS is enabled on profiles'
 );
 
--- Two test users
+-- Two test users (profiles are created by the on_auth_user_created trigger)
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-00000000000a', 'alice@test.local'),
   ('00000000-0000-0000-0000-00000000000b', 'bob@test.local');
-insert into public.profiles (id, username) values
-  ('00000000-0000-0000-0000-00000000000a', 'alice'),
-  ('00000000-0000-0000-0000-00000000000b', 'bob');
+update public.profiles set username = 'alice' where id = '00000000-0000-0000-0000-00000000000a';
+update public.profiles set username = 'bob' where id = '00000000-0000-0000-0000-00000000000b';
 
 -- Anonymous visitors can read profiles
 set local role anon;

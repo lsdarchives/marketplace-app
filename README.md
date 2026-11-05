@@ -336,151 +336,99 @@ The exact schema will be designed during the database phase.
 
 ---
 
-# 🛠️ Development Phases
+# 🛠️ Development Increments
 
-Development will be completed incrementally.
+The product is built in **agile vertical slices**. Every increment ships something usable end-to-end
+(database → API → app), is demoed on a real phone, passes CI, and is tagged (`v0.N`).
+Payments are settled off-platform until the Monetization increment so real users can start early.
 
-## Phase 0 — Planning & Repository
+## Increment 0 — Foundation (`v0.0`)
 
-* [x] Define product concept
-* [x] Define initial stack
-* [x] Create GitHub repository
-* [x] Create README
-* [x] Define repository structure
-* [x] Define development conventions
+* [x] pnpm monorepo (`apps/`, `packages/`, `supabase/`)
+* [x] Expo (SDK 58) + Expo Router + TypeScript app with 5 tabs
+* [x] Supabase project config, first migration (`profiles` + RLS) and pgTAP tests
+* [x] Typed Supabase client + backend health check on Home
+* [x] Shared types package (`@marketplace/shared`)
+* [x] ESLint, Jest + Testing Library, GitHub Actions CI
 
----
+## Increment 1 — Accounts (`v0.1`)
 
-## Phase 1 — Project Foundation
+* [ ] Sign up / log in (email OTP, Google, Apple) with secure session storage
+* [ ] Profile auto-created on signup; edit name, avatar, region
+* [ ] Protected routes and auth state
 
-* [ ] Create React Native + Expo project
-* [ ] Configure TypeScript
-* [ ] Configure Expo Router
-* [ ] Configure styling
-* [ ] Configure environment variables
-* [ ] Connect Supabase
-* [ ] Establish Git workflow
-* [ ] Create initial application architecture
+## Increment 2 — Listings v1, closed beta (`v0.2`)
 
----
+* [ ] Categories, create / edit / delete listings with photos
+* [ ] Home feed, category browse, listing detail, mark as sold
+* [ ] Styling system decision (NativeWind / Uniwind vs. theme tokens)
+* [ ] Internal EAS build to first 10–20 testers
 
-## Phase 2 — UI/UX Foundation
+## Increment 3 — Discovery (`v0.3`)
 
-* [ ] Design system
-* [ ] Navigation
-* [ ] Home screen
-* [ ] Browse screen
-* [ ] Search
-* [ ] Listing screen
-* [ ] Sell screen
-* [ ] Auction screen
-* [ ] Chat
-* [ ] Profile
+* [ ] Full-text search with category / price / condition / region filters
+* [ ] Favorites / watchlist, seller profile pages, infinite scroll
 
----
+## Increment 4 — Auctions v1 (`v0.4`)
 
-## Phase 3 — Authentication & Users
+* [ ] Auctions with start / reserve / Buy Now price and bid increments
+* [ ] Server-side `place_bid` with row locking and validation
+* [ ] Anti-sniping, scheduled server-side closing and winner selection
+* [ ] Realtime price + countdown, bid history, concurrency tests
 
-* [ ] Registration
-* [ ] Login
-* [ ] Logout
-* [ ] User profiles
-* [ ] Authentication state
-* [ ] Protected routes
-* [ ] Basic account security
+## Increment 5 — Messaging & notifications (`v0.5`)
 
----
+* [ ] Listing-linked realtime chat with read status
+* [ ] Push notifications: messages, outbid, ending soon, won
 
-## Phase 4 — Marketplace
+## Increment 6 — Trust, safety & public launch (`v1.0`)
 
-* [ ] Create listings
-* [ ] Edit listings
-* [ ] Delete listings
-* [ ] Image uploads
-* [ ] Categories
-* [ ] Search
-* [ ] Filtering
-* [ ] Favorites
-* [ ] Seller profiles
+* [ ] Report / block, rate limiting
+* [ ] Next.js admin: moderation queue, users, auction monitor (server-side roles)
+* [ ] Terms, privacy policy, in-app account deletion
+* [ ] Crash reporting + product analytics
+* [ ] App Store / Play Store release
+
+## Increment 7 — Monetization (`v1.1`)
+
+* [ ] Buy Now checkout and orders via payment provider webhooks
+* [ ] Success fees and featured / boosted listings
+* [ ] Reviews tied to completed transactions
+
+## Increment 8+ — Growth backlog
+
+AI listing assistant, proxy bidding, saved searches, offers, seller storefronts,
+delivery integrations, advanced search, recommendations — prioritised by analytics.
 
 ---
 
-## Phase 5 — Auction Engine
+# 💻 Getting Started
 
-* [ ] Create auction
-* [ ] Starting price
-* [ ] Bid increments
-* [ ] Place bids
-* [ ] Validate bids server-side
-* [ ] Realtime bidding
-* [ ] Automatic bidding
-* [ ] Countdown
-* [ ] Auction expiration
-* [ ] Anti-sniping
-* [ ] Winner determination
-* [ ] Bid history
-* [ ] Outbid notifications
+Requirements: Node 22.13+, pnpm 10, and Docker (for the local Supabase stack).
 
----
+```bash
+pnpm install
 
-## Phase 6 — Transactions
+# Backend (Docker required)
+pnpm db:start        # starts local Supabase, applies migrations + seed; prints API URL and anon key
+pnpm db:test         # runs pgTAP database tests
+pnpm db:types        # regenerates packages/shared/src/database.types.ts after schema changes
 
-* [ ] Checkout
-* [ ] Orders
-* [ ] Payment integration
-* [ ] Seller order management
-* [ ] Buyer order management
-* [ ] Delivery states
-* [ ] Transaction completion
-* [ ] Reviews
+# App
+cp apps/mobile/.env.example apps/mobile/.env   # then paste the URL + anon key
+pnpm dev             # starts Expo; scan the QR code with Expo Go
+```
 
----
+On a physical phone, use your computer's LAN IP instead of `127.0.0.1` in `EXPO_PUBLIC_SUPABASE_URL`.
 
-## Phase 7 — Admin Platform
+Quality checks (also run in CI): `pnpm lint`, `pnpm typecheck`, `pnpm test`.
 
-* [ ] Next.js admin application
-* [ ] Admin authentication
-* [ ] Role-based access
-* [ ] User management
-* [ ] Listing moderation
-* [ ] Reports
-* [ ] Auction monitoring
-* [ ] Transaction management
-* [ ] Analytics dashboard
-
----
-
-## Phase 8 — Advanced Features
-
-* [ ] AI listing assistant
-* [ ] AI price suggestions
-* [ ] Visual search
-* [ ] Personalized recommendations
-* [ ] Trending listings
-* [ ] Flash auctions
-* [ ] Seller storefronts
-* [ ] Collections
-* [ ] Achievements
-* [ ] Advanced notifications
-* [ ] Delivery integrations
-
----
-
-## Phase 9 — Security, Performance & Quality
-
-* [ ] Input validation
-* [ ] Authorization
-* [ ] Database security
-* [ ] Row-level security
-* [ ] API security
-* [ ] Rate limiting
-* [ ] Auction concurrency testing
-* [ ] Automated testing
-* [ ] Performance testing
-* [ ] Error handling
-* [ ] Logging
-* [ ] Monitoring
-* [ ] Security review
+```text
+apps/mobile/        Expo app (routes in src/app, components, hooks, lib)
+packages/shared/    Shared TypeScript types (generated database types)
+supabase/           config.toml, migrations/, seed.sql, tests/database/ (pgTAP)
+.github/workflows/  CI
+```
 
 ---
 
@@ -559,11 +507,11 @@ The platform should remain modular so that new capabilities can be introduced wi
 
 # 📌 Current Status
 
-**Status:** Planning
+**Status:** In development
 
-**Current Phase:** Phase 0 — Planning & Repository
+**Current Increment:** Increment 0 — Foundation (complete)
 
-**Next Step:** Create the GitHub repository and establish the initial project structure.
+**Next Step:** Increment 1 — Accounts.
 
 ---
 

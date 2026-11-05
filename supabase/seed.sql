@@ -1,0 +1,2 @@
+-- Local development seed data. Runs after migrations on `pnpm db:reset`.
+-- Categories and demo listings arrive in Increment 2.

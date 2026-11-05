@@ -368,6 +368,7 @@ Payments are settled off-platform until the Monetization increment so real users
 * [ ] Categories, create / edit / delete listings with photos
 * [ ] Home feed, category browse, listing detail, mark as sold
 * [ ] Google / Apple sign-in
+* [ ] Event logging (views, watches, bids, final prices) — the data every AI feature learns from
 * [ ] Styling system decision (NativeWind / Uniwind vs. theme tokens)
 * [ ] Internal EAS build to first 10–20 testers
 
@@ -375,6 +376,8 @@ Payments are settled off-platform until the Monetization increment so real users
 
 * [ ] Full-text search with category / price / condition / region filters
 * [ ] Favorites / watchlist, seller profile pages, infinite scroll
+* [ ] 🤖 Photo-to-listing: AI suggests title, category, description, condition and price range (seller confirms)
+* [ ] 🤖 Scam checks v1: stolen/stock photos, too-good-to-be-true prices, "pay outside the app" messages
 
 ## Increment 4 — Auctions v1 (`v0.4`)
 
@@ -402,10 +405,25 @@ Payments are settled off-platform until the Monetization increment so real users
 * [ ] Success fees and featured / boosted listings
 * [ ] Reviews tied to completed transactions
 
-## Increment 8+ — Growth backlog
+## Increment 8 — AI pricing, the differentiator
 
-AI listing assistant, proxy bidding, saved searches, offers, seller storefronts,
-delivery integrations, advanced search, recommendations — prioritised by analytics.
+> *The marketplace that knows what things are really worth, and keeps you safe while you trade.*
+
+Needs 1–3 months of real auction data.
+
+* [ ] 🤖 Fair-price and auction-outcome prediction ("similar items sold for R800–R1,100", live "likely final price")
+* [ ] 🤖 Best way to sell: Buy Now vs. auction, start price, reserve, duration, end time
+* [ ] 🤖 Visible trust signals: scam and shill-bid detection trained on moderator decisions
+
+## Increment 9+ — Growth backlog
+
+Visual search, natural-language search, personalised auction feed, proxy-bidding assistant,
+chat reply suggestions, saved searches, offers, seller storefronts, delivery integrations —
+prioritised by analytics.
+
+**AI guardrails:** AI suggests, people decide (no auto-bans or auto-pricing) · models run
+server-side only · AI content is labelled · every model decision is logged for review ·
+POPIA/GDPR-compliant data use.
 
 ---
 

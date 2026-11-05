@@ -1,5 +1,7 @@
 import { ActivityIndicator } from 'react-native';
 
+import { ContactForm } from '@/components/contact-form';
+import { MyListings } from '@/components/my-listings';
 import { ProfileEditor } from '@/components/profile-editor';
 import { Screen } from '@/components/screen';
 import { SignInPrompt } from '@/components/sign-in-prompt';
@@ -20,7 +22,11 @@ export default function ProfileScreen() {
   return (
     <Screen title="Profile">
       {profile ? (
-        <ProfileEditor key={profile.id} profile={profile} email={session?.user.email} />
+        <>
+          <ProfileEditor key={profile.id} profile={profile} email={session?.user.email} />
+          <ContactForm userId={profile.id} />
+          <MyListings userId={profile.id} />
+        </>
       ) : (
         <ActivityIndicator />
       )}

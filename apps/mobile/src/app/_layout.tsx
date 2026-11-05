@@ -19,6 +19,8 @@ export default function RootLayout() {
       <AnimatedSplashOverlay />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="listing/[id]/index" options={{ title: '', headerBackTitle: 'Back' }} />
+        <Stack.Screen name="listing/[id]/edit" options={{ title: 'Edit listing' }} />
         {/* Sign-in screens disappear (and leave history) as soon as a session exists.
             This is UX only; data access is enforced by row-level security on the server. */}
         <Stack.Protected guard={!signedIn}>

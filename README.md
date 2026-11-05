@@ -353,14 +353,22 @@ Payments are settled off-platform until the Monetization increment so real users
 
 ## Increment 1 — Accounts (`v0.1`)
 
-* [ ] Sign up / log in (email OTP, Google, Apple) with secure session storage
-* [ ] Profile auto-created on signup; edit name, avatar, region
-* [ ] Protected routes and auth state
+* [x] Passwordless sign-in / sign-up with a 6-digit email code
+* [x] Session kept signed-in across restarts, encrypted at rest (SecureStore key + AES)
+* [x] Profile auto-created on signup; edit username, name, area and avatar photo
+* [x] Sell / Inbox / Profile ask for sign-in; browsing stays open
+* [x] Avatar storage bucket with per-user folder policies, pgTAP tests
+* [ ] Google / Apple sign-in (needs a development build + developer accounts) → moved to Increment 2
+
+> Production note: hosted Supabase ignores `supabase/config.toml` email templates. Copy
+> `supabase/templates/magic_link.html` into Dashboard → Authentication → Email Templates → Magic Link.
 
 ## Increment 2 — Listings v1, closed beta (`v0.2`)
 
 * [ ] Categories, create / edit / delete listings with photos
 * [ ] Home feed, category browse, listing detail, mark as sold
+* [ ] Google / Apple sign-in
+* [ ] Event logging (views, watches, bids, final prices) — the data every AI feature learns from
 * [ ] Styling system decision (NativeWind / Uniwind vs. theme tokens)
 * [ ] Internal EAS build to first 10–20 testers
 
@@ -368,6 +376,8 @@ Payments are settled off-platform until the Monetization increment so real users
 
 * [ ] Full-text search with category / price / condition / region filters
 * [ ] Favorites / watchlist, seller profile pages, infinite scroll
+* [ ] 🤖 Photo-to-listing: AI suggests title, category, description, condition and price range (seller confirms)
+* [ ] 🤖 Scam checks v1: stolen/stock photos, too-good-to-be-true prices, "pay outside the app" messages
 
 ## Increment 4 — Auctions v1 (`v0.4`)
 
@@ -395,10 +405,25 @@ Payments are settled off-platform until the Monetization increment so real users
 * [ ] Success fees and featured / boosted listings
 * [ ] Reviews tied to completed transactions
 
-## Increment 8+ — Growth backlog
+## Increment 8 — AI pricing, the differentiator
 
-AI listing assistant, proxy bidding, saved searches, offers, seller storefronts,
-delivery integrations, advanced search, recommendations — prioritised by analytics.
+> *The marketplace that knows what things are really worth, and keeps you safe while you trade.*
+
+Needs 1–3 months of real auction data.
+
+* [ ] 🤖 Fair-price and auction-outcome prediction ("similar items sold for R800–R1,100", live "likely final price")
+* [ ] 🤖 Best way to sell: Buy Now vs. auction, start price, reserve, duration, end time
+* [ ] 🤖 Visible trust signals: scam and shill-bid detection trained on moderator decisions
+
+## Increment 9+ — Growth backlog
+
+Visual search, natural-language search, personalised auction feed, proxy-bidding assistant,
+chat reply suggestions, saved searches, offers, seller storefronts, delivery integrations —
+prioritised by analytics.
+
+**AI guardrails:** AI suggests, people decide (no auto-bans or auto-pricing) · models run
+server-side only · AI content is labelled · every model decision is logged for review ·
+POPIA/GDPR-compliant data use.
 
 ---
 
@@ -509,9 +534,9 @@ The platform should remain modular so that new capabilities can be introduced wi
 
 **Status:** In development
 
-**Current Increment:** Increment 0 — Foundation (complete)
+**Current Increment:** Increment 1 — Accounts (complete)
 
-**Next Step:** Increment 1 — Accounts.
+**Next Step:** Increment 2 — Listings v1 (closed beta).
 
 ---
 
